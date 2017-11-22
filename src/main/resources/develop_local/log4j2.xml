@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- priority : FATAL > ERROR > WARN >INFO > DEBUG -->
+<Configuration>
+	<properties>
+		<property name="LOG_HOME">/usr/tomcat_main/logs</property>
+		<property name="FILE_NAME_INPUT">main_inputLog</property>
+		<property name="FILE_NAME_ERROR">main_errorLog</property>
+	</properties>
+	<Appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+		</Console>
+		<RollingRandomAccessFile name="INPUT"
+			fileName="${LOG_HOME}/${FILE_NAME_INPUT}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME_INPUT}-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="ERROR"
+			fileName="${LOG_HOME}/${FILE_NAME_ERROR}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME_ERROR}-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingRandomAccessFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="DEFAULT" level="INFO" additivity="false">
+		</Logger>
+		<Logger name="INPUT" level="INFO" additivity="true">
+			<AppenderRef ref="INPUT" />
+		</Logger>
+		<Logger name="ERROR" level="INFO" additivity="true">
+			<AppenderRef ref="ERROR" />
+		</Logger>
+		<Root level="INFO">
+			<AppenderRef ref="STDOUT" />
+		</Root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,60 @@
+import org.gradle.plugins.ide.eclipse.model.Facet
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+ 
+sourceCompatibility = 1.8   // jdk
+webAppDirName = 'WebContent'    // webApp root folder
+sourceSets.main.java.srcDir 'src/main/java'   // java src
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use 'jcenter' for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile 'javax.servlet:javax.servlet-api:3.0.1' // Compiler level
+    compile 'javax.servlet:jstl:1.2'    // Runtime level
+    compile('org.springframework.boot:spring-boot-starter:1.5.6.RELEASE'){
+    	exclude module : 'spring-boot-starter-logging'
+    }
+    compile('org.springframework.boot:spring-boot-starter-web:1.5.6.RELEASE'){
+    	exclude module : 'spring-boot-starter-logging'
+    }
+    //compile('org.springframework.boot:spring-boot-starter-data-jpa:1.5.6.RELEASE'){
+    //	exclude module : 'spring-boot-starter-logging'
+    //}
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '1.5.6.RELEASE'
+    testCompile 'junit:junit:4.12'
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.2.0'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+	compile group: 'com.google.guava', name: 'guava', version: '19.0'
+	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.5'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.36'
+	compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.3'
+	compile group: 'org.json', name: 'json', version: '20160810'
+	compile 'commons-io:commons-io:2.4'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+}
+
+// Project Facets
+eclipse {
+    wtp {
+        facet {
+            facet name: 'jst.web', type: Facet.FacetType.fixed
+            facet name: 'wst.jsdt.web', type: Facet.FacetType.fixed
+            facet name: 'jst.java', type: Facet.FacetType.fixed
+            facet name: 'jst.web', version: '3.0'
+            facet name: 'jst.java', version: '1.8'
+            facet name: 'wst.jsdt.web', version: '1.0'
+        }
+    }
+}
+
