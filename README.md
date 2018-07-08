@@ -1,2 +1,2 @@
 # spring-boot-mvc-example
-Spring automatically add static web resources located within following directories : /META-INF/resources/,/public/,/static/,/resources/ but need to disable mvc config
+Spring automatically add static web resources located within following directories : /META-INF/resources/,/public/,/static/,/resources/ but need to disable mvc config and route:/html/test1.html
